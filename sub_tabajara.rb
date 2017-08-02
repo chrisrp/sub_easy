@@ -32,24 +32,24 @@ require 'net/http'
   end
 
   def baixa_1(file, language='pt')
-    return unless subtitle?(file)
+    return if subtitle?(file, language)
 
       if download_available?(file, language)
         sub_file_name = sub_name_for_file(file, language)
 
-        subtitle = download_subtitle(file)
+        subtitle = download_subtitle(file, language)
         File.open(sub_file_name, 'w') { |f| f.write(subtitle) }
       end
   end
 
   def baixa_tudo(language = 'pt')
     list_files(Dir.pwd).each do |file|
-      next unless subtitle?(file)
+      next if subtitle?(file, language)
 
       if download_available?(file, language)
         sub_file_name = sub_name_for_file(file, language)
 
-        subtitle = download_subtitle(file)
+        subtitle = download_subtitle(file, language)
         File.open(sub_file_name, 'w') { |f| f.write(subtitle) }
       end
     end
